@@ -11,16 +11,18 @@ app = dash.Dash(__name__)
 #    html.H1(children = 'Samu dash')
 #    )
 
-df = pd.read_csv('https://archive.org/download/samudata/samudata.csv')
+#df = pd.read_csv('samudata.csv')
+gapminder = px.data.gapminder()
 
-
-
+fig = px.scatter(gapminder, x=gapminder.gdpPercap, y='lifeExp', size='pop', color='country',
+hover_name='country',
+animation_frame='year', animation_group='country', size_max=50, log_x=True)
 
 app.layout = html.Div(
     [
-        html.H1(children = 'Samu dash'),
+        html.H1(children = 'Gapminder dash'),
         dcc.Graph(id="graph", style={"width": "75%", "display": "inline-block"},
-        figure = px.histogram(df, df.datetime, color=df.datetime.dt.year, hover_name=df.datetime.dt.date))
+        figure = fig)
         #px.scatter(df, df.comment, df.views, color=df.datetime.dt.year, log_x=True, log_y=True)
     ]
 )
